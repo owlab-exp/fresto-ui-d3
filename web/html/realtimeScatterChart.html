@@ -76,7 +76,13 @@
 			
 		// Data Array
 		//   차트 영역 내에 있는 데이타를 저장하는 배열
+        //   JSON 객체를 element로 한다
 		var circleArray = [];
+
+        // ColorString Array
+        //   targetURL을 Key로 하는 Array
+        //   { url : "", colorString : "" }을 element로 한다
+        var colorStringArray = [];
 		
 		// Point 사이즈
 		//   그려지는 circle의 반지름
@@ -158,11 +164,11 @@
 				
 			var circle = circleG.append("circle")
 			                    .datum(chartData)
-								.attr("id", function(d) { return "circle_"+d.clientID; } )
+								.attr("id", function (d) { return "circle_"+d.clientID; } )
 			                    .attr("cx", function (d) { return xScale(d.endTime); })
 								.attr("cy", function (d) { return yScale(d.responseTime); })
 								.attr("r", r)
-								.style("fill", randomColorString())
+                                .style("fill", function (d) { return getColorString(d.targetURL); })
 								.attr("class", "classCircle");
 								
 			circleArray.push(chartData);
@@ -274,7 +280,7 @@
 									   .attr("cx", function(d) { return xScale(d.endTime); } )
 			                           .attr("cy", function(d) { return yScale(d.responseTime); } )
 							           .attr("r", r)
-									   .style("fill", randomColorString())
+									   .style("fill", function (d) { return getColorString(d.targetURL); })
 									   .transition().duration(1000)
 									                .ease("linear")
 													.attr("cx", function(d) { return xScale(d.endTime) - correctionTime; } );
@@ -350,11 +356,33 @@
 					if ( firstCircle ) {
 						firstCircle.remove();
 					}
-					circleArray.shift();										
+					circleArray.shift();
 					removePastData(domainLeft);
 				}			
 			}
 		}
+
+		// url 별로 분류된 colorString을 반환하는 함수		
+        function getColorString(url) {
+            var returnValue,
+                hasUrl = false;
+
+			for ( var i in colorStringArray ) {
+
+				if ( colorStringArray[i].url === url ) {
+					returnValue = colorStringArray[i].colorString;
+					hasUrl = true;
+					break;
+				}
+			}
+				
+            if ( !hasUrl ) {
+				returnValue = randomColorString();
+                colorStringArray.push({"url" : url, "colorString" : returnValue});
+			}
+			
+			return returnValue;
+        }
 	});
 	</script>
 	</body>
