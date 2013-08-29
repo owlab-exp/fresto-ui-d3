@@ -252,7 +252,7 @@
 			if ($(window).height() + $(document).scrollTop() - $this.offset().top < margin) dir.ns = 's';
 
 			return dir.ns + (dir.ew ? dir.ew : '');
-		}
+		};
 	};
     
 })(jQuery);
