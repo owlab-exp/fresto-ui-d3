@@ -272,7 +272,7 @@
         //                   } OR {"status":"KO", "message":"<reason>"}
         var getDataFromServer = function () {
             var target = window.location.search.substring(1),
-                dataSourceURL = "/elapsedTimeStatsForSeconds ",
+                dataSourceURL = "http://fresto1.owlab.com:9999/elapsedTimeStatsForSeconds ",
                 timeStamp000 = Math.floor((new Date().getTime())/1000)*1000;
                 timeStamp000 = timeStamp000 - queryLatency;
             var renderWithNewData = function (data) {

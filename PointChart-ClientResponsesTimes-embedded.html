@@ -303,7 +303,7 @@
         //                    }
         var getDataFromServer = function () {
             var targetAPI = window.location.search.substring(1),
-                dataSourceURL = "/" + targetAPI,
+                dataSourceURL = "http://fresto1.owlab.com:9999/" + targetAPI,
                 timeStamp000 = Math.floor((new Date().getTime())/1000)*1000;
                 timeStamp000 = timeStamp000 - queryLatency;
             var renderWithNewData = function (data) {
@@ -730,7 +730,7 @@ console.log("Array.max(circleArray) : " + Array.max(circleArray));
 
             $.ajax({
                 type: "POST",
-                url: "/getResponseTimeDetail",
+                url: "http://fresto1.owlab.com:9999/getResponseTimeDetail",
                 contentType: "application/json",
                 data: JSON.stringify({"rid": d.clientID}),
                 success: successHTML,
